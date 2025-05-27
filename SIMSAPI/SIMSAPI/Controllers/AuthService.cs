@@ -53,15 +53,9 @@ namespace SIMSAPI.Controllers
 
         private bool checkUser(string username, string password)
         {
-            Console.WriteLine("checkUser wurde aufgerufen mit: " + username);
             try
             {
                 bool result = false;
-                if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
-                {
-                    Console.WriteLine("test");
-                    return result;
-                }
 
                 string connectionString = Environment.GetEnvironmentVariable("postgresdb") ?? "Host=localhost;Username=postgresadmin;Password=1234;Database=db1";
 

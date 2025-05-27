@@ -57,6 +57,8 @@
 
     string escalateMessage = "";
 
+
+    //Beim ersten mal aufrufen der Seite AddNewIndicent, wird der Username abgefragt und eingefügt in "Reporter".
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -67,6 +69,7 @@
         }
     }
 
+    //Hier wird die id aus der URL geholt und geprüft ob es ein neuer Incident=0 oder eine IncidentAbfrage=(id > 0) ist.
     protected override void OnInitialized()
     {
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
