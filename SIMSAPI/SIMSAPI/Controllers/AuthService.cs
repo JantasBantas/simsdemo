@@ -66,6 +66,10 @@ namespace SIMSAPI.Controllers
                         cmd.Parameters.AddWithValue("username", username);
                         cmd.Parameters.AddWithValue("pwdhash", computeSha256Hash(password));
                         using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                        if (username == "" && password == "")
+                        {
+                                return false;    
+                        }else
                         {
                             result = reader.HasRows;
                         }
