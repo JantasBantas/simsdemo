@@ -53,12 +53,14 @@ namespace SIMSAPI.Controllers
 
         private bool checkUser(string username, string password)
         {
+            Console.WriteLine("checkUser wurde aufgerufen mit: " + username);
             try
             {
                 bool result = false;
-                if (username == "" && password == "")
+                if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
                 {
-                    return false;
+                    Console.WriteLine("test");
+                    return result;
                 }
 
                 string connectionString = Environment.GetEnvironmentVariable("postgresdb") ?? "Host=localhost;Username=postgresadmin;Password=1234;Database=db1";
@@ -83,7 +85,7 @@ namespace SIMSAPI.Controllers
             {
                 return false;
             }
-}
+        }
 
         private string computeSha256Hash(string rawData)
         {
