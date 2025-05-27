@@ -56,6 +56,11 @@ namespace SIMSAPI.Controllers
             try
             {
                 bool result = false;
+                if (username == "" && password == "")
+                {
+                    return false;
+                }
+
                 string connectionString = Environment.GetEnvironmentVariable("postgresdb") ?? "Host=localhost;Username=postgresadmin;Password=1234;Database=db1";
 
                 using (NpgsqlConnection db = new NpgsqlConnection(connectionString))
@@ -66,24 +71,19 @@ namespace SIMSAPI.Controllers
                         cmd.Parameters.AddWithValue("username", username);
                         cmd.Parameters.AddWithValue("pwdhash", computeSha256Hash(password));
                         using (NpgsqlDataReader reader = cmd.ExecuteReader())
-                        if (username == "" && password == "")
-                        {
-                                return false;    
-                        }else
                         {
                             result = reader.HasRows;
                         }
                     }
                     db.Close();
                 }
-
                 return result;
             }
             catch
             {
                 return false;
             }
-        }
+}
 
         private string computeSha256Hash(string rawData)
         {
