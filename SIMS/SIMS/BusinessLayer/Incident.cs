@@ -33,7 +33,7 @@ namespace SIMS
                             Title = (string)reader["Title"];
                             Reported_at = Convert.ToDateTime(reader["Reported_at"]);
                             Incident_type = Convert.ToInt32(reader["Incident_type_id"]);
-                            ResourceID = (string)reader["ResourceID"];
+                            ResourceID = (string)reader["resource_id"];
                         }
                     }
                 }
@@ -61,7 +61,7 @@ namespace SIMS
                                 Title = (string)reader["Title"],
                                 Reported_at = Convert.ToDateTime(reader["Reported_at"]),
                                 Incident_type = Convert.ToInt32(reader["Incident_type_id"]),
-                                ResourceID = (string)reader["ResourceID"]
+                                ResourceID = (string)reader["resource_id"]
                             };
                             result.Add(item);
                         }
