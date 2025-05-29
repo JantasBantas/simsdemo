@@ -21,6 +21,10 @@ namespace SIMS
             using (NpgsqlConnection db = new NpgsqlConnection(base.ConnectionString))
             {
                 db.Open();
+
+                //KOMMENTAR:
+                System.Console.WriteLine("DB connection successful from Incident Business Layer.");
+
                 using (NpgsqlCommand cmd = new NpgsqlCommand($"select * from sims.incident where Incident_id = {id}", db))
                 {
                     using (NpgsqlDataReader reader = cmd.ExecuteReader())

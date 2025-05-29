@@ -59,15 +59,26 @@
 
     private void cmdLogin_Clicked()
     {
+        Console.WriteLine("login clicked.");
+
         string token = Helper.getToken(Username, Password);
         if (token != "")
         {
+            //KOMMENTAR:
+            Console.WriteLine("login-if-token= " + token);
+
             ProtectedSessionStore.SetAsync("username", Username);
             ProtectedSessionStore.SetAsync("token", token);
             IsDisabled = true;
+
+            //UPDATE Last Login:
+
             UserInfo = "Logged in as: " + Username;
         }else
         {
+            //KOMMENTAR:
+            Console.WriteLine("login-else-token= " + token);
+
             ErrorInfo = "Wrong data!";
             Username = "";
             Password = "";
@@ -76,6 +87,9 @@
 
     private void cmdLogout_Clicked()
     {
+        //KOMMENTAR
+        Console.WriteLine("logout successfully");
+
         ProtectedSessionStore.SetAsync("username", "");
         ProtectedSessionStore.SetAsync("token", "");
         UserInfo = "";

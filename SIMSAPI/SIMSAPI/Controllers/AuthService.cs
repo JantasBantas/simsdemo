@@ -35,12 +35,36 @@ namespace SIMSAPI.Controllers
         {
             if (checkUser(username, password))
             {
+                //UPDATE LAST LOGIN:
+                System.Console.WriteLine("START update lastlogin");
+
+                string connectionString = Environment.GetEnvironmentVariable("connectionstring");
+                using (NpgsqlConnection db = new NpgsqlConnection(connectionString))
+                {
+                    db.Open();
+                    using (NpgsqlCommand cmd = new NpgsqlCommand($"UPDATE sims.simsuser SET lastlogin = NOW() WHERE username = @username", db))
+                    {
+                        cmd.Parameters.AddWithValue("username", username);
+                        cmd.ExecuteNonQuery();
+                    }
+                    db.Close();
+                }
+                System.Console.WriteLine("END update lastlogin");
+
+
+                //KOMMENTAR:
+                Console.WriteLine("POST-if-checkuser-OK");
+
                 string token = generateToken(username, password);
                 new RedisDB().StoreToken(username, token);
+
+                Console.WriteLine("TOKEN-stored");
+
                 return token;
             }
             else
             {
+                System.Console.WriteLine("TOKEN-NOT-stored");
                 return "";
             }
         }
@@ -55,13 +79,17 @@ namespace SIMSAPI.Controllers
         {
             try
             {
+                Console.WriteLine("checkuser-begin");
+
                 bool result = false;
 
                 //Diese Environment Variable ist vermutlich nicht erreichbar, weil sie SIMS_WEB erstellt. In Docker compose local geht es, aber in einzelnen Containern eher nicht.
                 //string connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION");
                 string connectionString = Environment.GetEnvironmentVariable("connectionstring");
 
-                //?? "Host=localhost;Username=postgresadmin;Password=1234;Database=db1";
+                //KOMMENTAR:
+                Console.WriteLine("connectionstring-value= " + connectionString);
+
 
                 using (NpgsqlConnection db = new NpgsqlConnection(connectionString))
                 {
