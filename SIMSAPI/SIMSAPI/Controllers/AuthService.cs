@@ -57,7 +57,9 @@ namespace SIMSAPI.Controllers
             {
                 bool result = false;
 
-                string connectionString = Environment.GetEnvironmentVariable("postgresdb") ?? "Host=localhost;Username=postgresadmin;Password=1234;Database=db1";
+                string connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION") 
+                
+                //?? "Host=localhost;Username=postgresadmin;Password=1234;Database=db1";
 
                 using (NpgsqlConnection db = new NpgsqlConnection(connectionString))
                 {

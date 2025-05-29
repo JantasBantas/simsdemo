@@ -6,7 +6,10 @@ namespace SIMS
 {
     public static class Helper
     {
-        static string APIURL = Environment.GetEnvironmentVariable("api") ?? "http://localhost:8888";
+        //api_url
+        static string APIURL = Environment.GetEnvironmentVariable("api_url");
+        
+        //?? "http://localhost:8888";
         
         public static string URL_getToken = $"{APIURL}/AuthService?username=%1&password=%2";
         public static string URL_checkToken = $"{APIURL}/AuthService/check?username=%1&token=%2";
