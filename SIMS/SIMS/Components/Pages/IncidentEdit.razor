@@ -46,7 +46,7 @@
     <hr />
     <div class="form-group" style="margin-top: 10px;">
         <button type="button" class="btn btn-success" @onclick="cmdSave_Clicked">Save incident</button>
-        <button type="button" class="btn btn-warning" @onclick="cmdEscalate_Clicked">Escalate</button>
+        <button type="button" class="btn btn-warning" @onclick="cmdStopTask_Clicked">Stop Task</button>
         <span class="text-danger" style="margin-left: 10px; font-weight: bold">@escalateMessage</span>
     </div>
 
@@ -59,7 +59,8 @@
     Incident incident = new Incident();
     string[] incidenttypeArray { get; set; } = new[] { "Ticket", "Issue", "Informational", "Problem" };
 
-    string escalateMessage = "";
+    string _resourceID = incident.ResourceID;
+    string stopMessage = "";
 
 
     //Beim ersten mal aufrufen der Seite AddNewIndicent, wird der Username abgefragt und eingefügt in "Reporter".
@@ -90,8 +91,9 @@
         NavManager.NavigateTo("incidents");
     }
 
-    private void cmdEscalate_Clicked()
+    private void cmdStopTask_Clicked()
     {
-        escalateMessage = "Sorry, not implemented";
+        //API die Daten die nötig sind senden 1. TaskNumber
+        stopMessage = Helper.stopMessage(_resourceID);
     }
 }

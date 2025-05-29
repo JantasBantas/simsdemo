@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
 using Npgsql;
+using RestSharp;
+using System.Text.Json;
+
 
 namespace SIMSAPI.Controllers
 {
@@ -68,6 +71,32 @@ namespace SIMSAPI.Controllers
                 return "";
             }
         }
+
+        //HIER
+        [HttpPost]
+        [Route("STOP")]
+        public string Post(string resourceID)
+        {
+            _resourceID = resourceID;
+            LambdaURL = "https://hrxlkhv36iagvdc7bmczlkrrre0yzsaa.lambda-url.eu-central-1.on.aws/";
+
+            RestClient client = new RestClient(LambdaURL);
+            RestRequest request = new RestRequest("", Method.Post);
+
+            var body = new
+            {
+                cluster = "SIMS_Cluster",
+                task = resourceID
+            };
+            request.AddJsonBody(body);
+
+            RestResponse response = client.Execute(request);
+
+            return response.Content;
+
+        }
+
+        //HIER
 
         private string generateToken(string username, string password)
         {
