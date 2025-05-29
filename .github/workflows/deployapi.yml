@@ -1,0 +1,34 @@
+name: Build & Push SIMSAPI to ECR
+
+on:
+  push:
+    branches: [ "deployaws" ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: sims_api
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::942500931636:role/GitHubAction-AssumeRoleWithAction
+          aws-region: eu-central-1
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push Docker image
+        run: |
+          IMAGE_URI=942500931636.dkr.ecr.eu-central-1.amazonaws.com/$IMAGE_NAME:${{ github.sha }}
+          docker build -t $IMAGE_URI ./SIMSAPI
+          docker push $IMAGE_URI
