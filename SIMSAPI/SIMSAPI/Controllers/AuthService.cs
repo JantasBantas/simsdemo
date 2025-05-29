@@ -57,8 +57,10 @@ namespace SIMSAPI.Controllers
             {
                 bool result = false;
 
-                string connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION") 
-                
+                //Diese Environment Variable ist vermutlich nicht erreichbar, weil sie SIMS_WEB erstellt. In Docker compose local geht es, aber in einzelnen Containern eher nicht.
+                //string connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION");
+                string connectionString = Environment.GetEnvironmentVariable("connectionstring");
+
                 //?? "Host=localhost;Username=postgresadmin;Password=1234;Database=db1";
 
                 using (NpgsqlConnection db = new NpgsqlConnection(connectionString))
