@@ -57,7 +57,8 @@ namespace SIMS
                 System.Console.WriteLine("RAW JSON RESPONSE= " + response.Content);
             try
             {
-                using JsonDocument doc = JsonDocument.Parse(response.Content);
+                string contentbody = JsonSerializer.Deserialize<string>(response.Content);
+                using JsonDocument doc = JsonDocument.Parse(contentbody);
                 JsonElement root = doc.RootElement;
                 string message = root.GetProperty("message").GetString();
                 //string stopMessage = JsonSerializer.Serialize(message);
