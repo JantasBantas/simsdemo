@@ -80,8 +80,8 @@ namespace SIMSAPI.Controllers
         [Route("STOP")]
         public string Post(string resourceID)
         {
-            _resourceID = resourceID;
-            LambdaURL = Environment.GetEnvironmentVariable("URL");
+            string _resourceID = resourceID;
+            string LambdaURL = Environment.GetEnvironmentVariable("URL");
 
             RestClient client = new RestClient(LambdaURL);
             RestRequest request = new RestRequest("", Method.Post);
