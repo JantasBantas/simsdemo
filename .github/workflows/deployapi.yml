@@ -29,6 +29,6 @@ jobs:
 
       - name: Build, tag, and push Docker image
         run: |
-          IMAGE_URI=942500931636.dkr.ecr.eu-central-1.amazonaws.com/$IMAGE_NAME:${{ github.sha }}
+          IMAGE_URI=942500931636.dkr.ecr.eu-central-1.amazonaws.com/$IMAGE_NAME:latest
           docker build -t $IMAGE_URI ./SIMSAPI
           docker push $IMAGE_URI
