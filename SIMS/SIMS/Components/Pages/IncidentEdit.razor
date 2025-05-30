@@ -59,9 +59,6 @@
     Incident incident = new Incident();
     string[] incidenttypeArray { get; set; } = new[] { "Ticket", "Issue", "Informational", "Problem" };
 
-    string stopMessage = "";
-
-
     //Beim ersten mal aufrufen der Seite AddNewIndicent, wird der Username abgefragt und eingefügt in "Reporter".
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -96,6 +93,6 @@
         Console.WriteLine("cmdStopTask Clicked");
         Console.WriteLine("cmdSTopTask - resourceID = " + incident.ResourceID);
 
-        stopMessage = Helper.stopInstance(incident.ResourceID);
+        string stopMessage = Helper.stopInstance(incident.ResourceID);
     }
 }
