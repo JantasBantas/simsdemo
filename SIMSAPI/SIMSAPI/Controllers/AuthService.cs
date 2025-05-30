@@ -39,6 +39,7 @@ namespace SIMSAPI.Controllers
             if (checkUser(username, password))
             {
                 //UPDATE LAST LOGIN:
+                //KOMMENTAR
                 System.Console.WriteLine("START update lastlogin");
 
                 string connectionString = Environment.GetEnvironmentVariable("connectionstring");
@@ -52,6 +53,7 @@ namespace SIMSAPI.Controllers
                     }
                     db.Close();
                 }
+                //KOMMENTAR
                 System.Console.WriteLine("END update lastlogin");
 
 
@@ -61,18 +63,19 @@ namespace SIMSAPI.Controllers
                 string token = generateToken(username, password);
                 new RedisDB().StoreToken(username, token);
 
+                //KOMMENTAR:
                 Console.WriteLine("TOKEN-stored");
 
                 return token;
             }
             else
             {
+                //KOMMENTAR:
                 System.Console.WriteLine("TOKEN-NOT-stored");
                 return "";
             }
         }
 
-        //HIER
         [HttpPost]
         [Route("STOP")]
         public string Post(string resourceID)
@@ -93,10 +96,7 @@ namespace SIMSAPI.Controllers
             RestResponse response = client.Execute(request);
 
             return response.Content;
-
         }
-
-        //HIER
 
         private string generateToken(string username, string password)
         {
@@ -108,6 +108,7 @@ namespace SIMSAPI.Controllers
         {
             try
             {
+                //KOMMENTAR:
                 Console.WriteLine("checkuser-begin");
 
                 bool result = false;
