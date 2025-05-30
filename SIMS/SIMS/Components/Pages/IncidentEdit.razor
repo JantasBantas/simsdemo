@@ -47,7 +47,7 @@
     <div class="form-group" style="margin-top: 10px;">
         <button type="button" class="btn btn-success" @onclick="cmdSave_Clicked">Save incident</button>
         <button type="button" class="btn btn-warning" @onclick="cmdStopTask_Clicked">Stop Task</button>
-        <span class="text-danger" style="margin-left: 10px; font-weight: bold">@escalateMessage</span>
+        <span class="text-danger" style="margin-left: 10px; font-weight: bold">@stopMessage</span>
     </div>
 
 </div>
@@ -59,7 +59,6 @@
     Incident incident = new Incident();
     string[] incidenttypeArray { get; set; } = new[] { "Ticket", "Issue", "Informational", "Problem" };
 
-    string _resourceID = incident.ResourceID;
     string stopMessage = "";
 
 
@@ -94,6 +93,6 @@
     private void cmdStopTask_Clicked()
     {
         //API die Daten die nötig sind senden 1. TaskNumber
-        stopMessage = Helper.stopMessage(_resourceID);
+        stopMessage = Helper.stopMessage(incident.ResourceID);
     }
 }
