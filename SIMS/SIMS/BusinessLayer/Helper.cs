@@ -55,14 +55,24 @@ namespace SIMS
             RestResponse response = client.Execute(request);
 
             //Message aus der Antwort auslesen:
-            using JsonDocument doc = JsonDocument.Parse(response.Content);
-            JsonElement root = doc.RootElement;
-            string stopMessage = root.GetProperty("body").GetString();
+            if (string.IsNullOrWhiteSpace(response.Content))
+            {
+                Console.WriteLine("Response is empty!");
+                return "Fehler: Leere Antwort vom Server.";
+            }
+            if (!response.IsSuccessful)
+            {
+                Console.WriteLine("Fehler beim Aufruf: " + response.StatusCode);
+                return "Fehler: " + response.StatusDescription;
+            }
 
-            //KOMMENTAR:
+                        //KOMMENTAR:
             System.Console.WriteLine("stopInstance: request = " + request);
             System.Console.WriteLine("stopInstance: response = " + response.Content);
 
+            using JsonDocument doc = JsonDocument.Parse(response.Content);
+            JsonElement root = doc.RootElement;
+            string stopMessage = root.GetProperty("body").GetString();
 
             //KOMMENTAR:
             System.Console.WriteLine("stopInstanec: stopMessage = " + stopMessage);
