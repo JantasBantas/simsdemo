@@ -54,19 +54,9 @@ namespace SIMS
                 RestClient client = new RestClient(Helper.URL_stopInstance.Replace("%1", resourceID));
                 RestRequest request = new RestRequest("", Method.Post);
                 RestResponse response = client.Execute(request);
+                System.Console.WriteLine("RAW JSON RESPONSE= " + response.Content);
             try
             {
-                if (string.IsNullOrWhiteSpace(response.Content))
-                {
-                    Console.WriteLine("Response is empty!");
-                    return "Fehler: Leere Antwort vom Server.";
-                }
-                if (!response.IsSuccessful)
-                {
-                    Console.WriteLine("Fehler beim Aufruf: " + response.StatusCode);
-                    return "Fehler: " + response.StatusDescription;
-                }
-                
                 using JsonDocument doc = JsonDocument.Parse(response.Content);
                 JsonElement root = doc.RootElement;
                 JsonElement body = root.GetProperty("body");
@@ -76,10 +66,10 @@ namespace SIMS
 
                 return stopMessage;
             }
-            catch(JsonException ex)
+            catch (JsonException ex)
             {
                 Console.WriteLine("Fehler beim Parsen der Antwort als JSON:" + ex.Message);
-                return "Fehler: Antwort ist kein gültiges JSON.";
+                return "Fehler: Antwort ist kein gültiges JSON siehe exception Message.";
             }
         }
     }
