@@ -60,7 +60,7 @@ namespace SIMS
             string stopMessage = root.GetProperty("body").GetString();
 
             //KOMMENTAR:
-            System.Console.WriteLine("stopInstance: request = " + request.Content);
+            System.Console.WriteLine("stopInstance: request = " + request);
             System.Console.WriteLine("stopInstance: response = " + response.Content);
 
 
