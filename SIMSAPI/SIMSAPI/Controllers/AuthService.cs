@@ -81,34 +81,24 @@ namespace SIMSAPI.Controllers
         public string Post(string resourceID)
         {
             string _resourceID = resourceID;
-
-            //KOMMENTAR:
-            System.Console.WriteLine("resourceID = " + _resourceID);
-
+                //KOMMENTAR:
+                System.Console.WriteLine("API resourceID = " + _resourceID);
             string LambdaURL = Environment.GetEnvironmentVariable("URL");
-
             RestClient client = new RestClient(LambdaURL);
-
-            //KOMMENTAR:
-            System.Console.WriteLine("LambdaURL = " + LambdaURL);
-
+                //KOMMENTAR:
+                System.Console.WriteLine("API LambdaURL = " + LambdaURL);
             RestRequest request = new RestRequest("", Method.Post);
-
             var body = new
             {
                 cluster = "SIMS_Cluster",
                 task = resourceID
             };
             request.AddJsonBody(body);
-
-            //KOMMENTAR:
-            System.Console.WriteLine("requestbody =" + body );
-
+                //KOMMENTAR:
+                System.Console.WriteLine("requestbody =" + body );
             RestResponse response = client.Execute(request);
-            
-            //KOMMENTAR:
-            System.Console.WriteLine("response= " + response);
-
+                //KOMMENTAR:
+                System.Console.WriteLine("API response from Lambda = " + response.Content);
             return response.Content;
         }
 
