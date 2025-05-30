@@ -78,7 +78,7 @@ namespace SIMSAPI.Controllers
         public string Post(string resourceID)
         {
             _resourceID = resourceID;
-            LambdaURL = "https://hrxlkhv36iagvdc7bmczlkrrre0yzsaa.lambda-url.eu-central-1.on.aws/";
+            LambdaURL = Environment.GetEnvironmentVariable("URL");
 
             RestClient client = new RestClient(LambdaURL);
             RestRequest request = new RestRequest("", Method.Post);
