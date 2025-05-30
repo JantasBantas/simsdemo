@@ -47,37 +47,41 @@ namespace SIMS
 
         public static string stopInstance(string resourceID)
         {
-            //KOMMENTAR:
-            System.Console.WriteLine("HELPER stopInstance start.");
 
-            RestClient client = new RestClient(Helper.URL_stopInstance.Replace("%1", resourceID));
-            RestRequest request = new RestRequest("", Method.Post);
-            RestResponse response = client.Execute(request);
+                //KOMMENTAR:
+                System.Console.WriteLine("HELPER stopInstance start.");
 
-            //Message aus der Antwort auslesen:
-            if (string.IsNullOrWhiteSpace(response.Content))
+                RestClient client = new RestClient(Helper.URL_stopInstance.Replace("%1", resourceID));
+                RestRequest request = new RestRequest("", Method.Post);
+                RestResponse response = client.Execute(request);
+            try
             {
-                Console.WriteLine("Response is empty!");
-                return "Fehler: Leere Antwort vom Server.";
+                if (string.IsNullOrWhiteSpace(response.Content))
+                {
+                    Console.WriteLine("Response is empty!");
+                    return "Fehler: Leere Antwort vom Server.";
+                }
+                if (!response.IsSuccessful)
+                {
+                    Console.WriteLine("Fehler beim Aufruf: " + response.StatusCode);
+                    return "Fehler: " + response.StatusDescription;
+                }
+                
+                using JsonDocument doc = JsonDocument.Parse(response.Content);
+                JsonElement root = doc.RootElement;
+                string stopMessage = root.GetProperty("body").GetString();
+
+                //KOMMENTAR:
+                System.Console.WriteLine("stopInstanec: stopMessage = " + stopMessage);
+
+                return stopMessage;
             }
-            if (!response.IsSuccessful)
+            catch(JsonException ex)
             {
-                Console.WriteLine("Fehler beim Aufruf: " + response.StatusCode);
-                return "Fehler: " + response.StatusDescription;
+                Console.WriteLine("Fehler beim Parsen der Antwort als JSON:" + ex.Message);
+                Console.WriteLine("Antwort-Inhalt: " + response.Content);
+                return "Fehler: Antwort ist kein gültiges JSON.";
             }
-
-                        //KOMMENTAR:
-            System.Console.WriteLine("stopInstance: request = " + request);
-            System.Console.WriteLine("stopInstance: response = " + response.Content);
-
-            using JsonDocument doc = JsonDocument.Parse(response.Content);
-            JsonElement root = doc.RootElement;
-            string stopMessage = root.GetProperty("body").GetString();
-
-            //KOMMENTAR:
-            System.Console.WriteLine("stopInstanec: stopMessage = " + stopMessage);
-            
-            return stopMessage;
         }
     }
 

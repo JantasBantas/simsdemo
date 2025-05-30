@@ -91,11 +91,12 @@ namespace SIMSAPI.Controllers
             var body = new
             {
                 cluster = "SIMS_Cluster",
-                task = resourceID
+                task = _resourceID
             };
             request.AddJsonBody(body);
                 //KOMMENTAR:
                 System.Console.WriteLine("requestbody =" + body );
+                System.Console.WriteLine("full request API to lambda = " + request);
             RestResponse response = client.Execute(request);
                 //KOMMENTAR:
                 System.Console.WriteLine("API response from Lambda = " + response.Content);
