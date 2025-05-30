@@ -69,10 +69,9 @@ namespace SIMS
                 
                 using JsonDocument doc = JsonDocument.Parse(response.Content);
                 JsonElement root = doc.RootElement;
-                string stopMessage = root.GetProperty("body").GetString();
-
-                //KOMMENTAR:
-                System.Console.WriteLine("stopInstanec: stopMessage = " + stopMessage);
+                JsonElement body = root.GetProperty("body");
+                string stopMessage = body.GetProperty("message").GetString();
+                Console.WriteLine("stopInstance: stopMessage = " + stopMessage);
 
                 return stopMessage;
             }
