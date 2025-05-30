@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace SIMS
 {
@@ -8,11 +9,12 @@ namespace SIMS
     {
         //api_url
         static string APIURL = Environment.GetEnvironmentVariable("api_url");
-        
+
         //?? "http://localhost:8888";
-        
+
         public static string URL_getToken = $"{APIURL}/AuthService?username=%1&password=%2";
         public static string URL_checkToken = $"{APIURL}/AuthService/check?username=%1&token=%2";
+        public static string URL_stopInstance = $"{APIURL}/STOP?resourceID=%1";
 
         public static string getToken(string username, string password)
         {
@@ -41,6 +43,19 @@ namespace SIMS
                 for (int i = 0; i < bytes.Length; i++) { builder.Append(bytes[i].ToString("x2")); }
                 return builder.ToString();
             }
+        }
+
+        public static string stopInstance(string resourceID)
+        {
+            RestClient client = new RestClient(Helper.URL_stopInstance.Replace("%1", resourceID));
+            RestRequest request = new RestRequest("", Method.Post);
+            RestResponse response = client.Execute(request);
+
+            //Message aus der Antwort auslesen:
+            using JsonDocument doc = JsonDocument.Parse(response.Content);
+            JsonElement root = doc.RootElement;
+            string stopMessage = root.GetProperty("body").GetString();
+            return stopMessage;
         }
     }
 
