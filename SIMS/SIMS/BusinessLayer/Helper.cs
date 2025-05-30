@@ -59,12 +59,11 @@ namespace SIMS
             {
                 using JsonDocument doc = JsonDocument.Parse(response.Content);
                 JsonElement root = doc.RootElement;
-                JsonElement body = root.GetProperty("body");
-                //string stopMessage = body.GetProperty("message").GetString();
-                string stopMessage = JsonSerializer.Serialize(body);
-                Console.WriteLine("stopInstance: stopMessage = " + stopMessage);
+                string message = root.GetProperty("message").GetString();
+                //string stopMessage = JsonSerializer.Serialize(message);
+                Console.WriteLine("stopInstance: stopMessage = " + message);
 
-                return stopMessage;
+                return message;
             }
             catch (JsonException ex)
             {
