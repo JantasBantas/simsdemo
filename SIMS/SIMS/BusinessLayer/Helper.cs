@@ -14,7 +14,7 @@ namespace SIMS
 
         public static string URL_getToken = $"{APIURL}/AuthService?username=%1&password=%2";
         public static string URL_checkToken = $"{APIURL}/AuthService/check?username=%1&token=%2";
-        public static string URL_stopInstance = $"{APIURL}/STOP?resourceID=%1";
+        public static string URL_stopInstance = $"{APIURL}/AuthService/STOP?resourceID=%1";
 
         public static string getToken(string username, string password)
         {

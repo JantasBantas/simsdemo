@@ -83,6 +83,7 @@ namespace SIMSAPI.Controllers
             string _resourceID = resourceID;
                 //KOMMENTAR:
                 System.Console.WriteLine("API resourceID = " + _resourceID);
+                
             string LambdaURL = Environment.GetEnvironmentVariable("URL");
             RestClient client = new RestClient(LambdaURL);
                 //KOMMENTAR:
