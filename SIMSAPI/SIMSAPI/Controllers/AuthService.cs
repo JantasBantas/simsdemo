@@ -81,13 +81,17 @@ namespace SIMSAPI.Controllers
         public string Post(string resourceID)
         {
             string _resourceID = resourceID;
+
             //KOMMENTAR:
             System.Console.WriteLine("resourceID = " + _resourceID);
+
             string LambdaURL = Environment.GetEnvironmentVariable("URL");
 
             RestClient client = new RestClient(LambdaURL);
+
             //KOMMENTAR:
             System.Console.WriteLine("LambdaURL = " + LambdaURL);
+
             RestRequest request = new RestRequest("", Method.Post);
 
             var body = new
@@ -96,10 +100,12 @@ namespace SIMSAPI.Controllers
                 task = resourceID
             };
             request.AddJsonBody(body);
+
             //KOMMENTAR:
             System.Console.WriteLine("requestbody =" + body );
 
             RestResponse response = client.Execute(request);
+            
             //KOMMENTAR:
             System.Console.WriteLine("response= " + response);
 
