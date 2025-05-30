@@ -47,6 +47,9 @@ namespace SIMS
 
         public static string stopInstance(string resourceID)
         {
+            //KOMMENTAR:
+            System.Console.WriteLine("HELPER stopInstance start.");
+
             RestClient client = new RestClient(Helper.URL_stopInstance.Replace("%1", resourceID));
             RestRequest request = new RestRequest("", Method.Post);
             RestResponse response = client.Execute(request);
