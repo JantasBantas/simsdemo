@@ -51,10 +51,18 @@ namespace SIMS
             RestRequest request = new RestRequest("", Method.Post);
             RestResponse response = client.Execute(request);
 
+            //KOMMENTAR:
+            System.Console.WriteLine("stopInstance: request = " + request);
+            System.Console.WriteLine("stopInstance: response = " + response);
+
             //Message aus der Antwort auslesen:
             using JsonDocument doc = JsonDocument.Parse(response.Content);
             JsonElement root = doc.RootElement;
             string stopMessage = root.GetProperty("body").GetString();
+
+            //KOMMENTAR:
+            System.Console.WriteLine("stopInstanec: stopMessage = " + stopMessage);
+            
             return stopMessage;
         }
     }
