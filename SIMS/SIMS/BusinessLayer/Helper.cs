@@ -70,7 +70,8 @@ namespace SIMS
                 using JsonDocument doc = JsonDocument.Parse(response.Content);
                 JsonElement root = doc.RootElement;
                 JsonElement body = root.GetProperty("body");
-                string stopMessage = body.GetProperty("message").GetString();
+                //string stopMessage = body.GetProperty("message").GetString();
+                string stopMessage = JsonSerializer.Serialize(body);
                 Console.WriteLine("stopInstance: stopMessage = " + stopMessage);
 
                 return stopMessage;
@@ -78,7 +79,6 @@ namespace SIMS
             catch(JsonException ex)
             {
                 Console.WriteLine("Fehler beim Parsen der Antwort als JSON:" + ex.Message);
-                Console.WriteLine("Antwort-Inhalt: " + response.Content);
                 return "Fehler: Antwort ist kein gültiges JSON.";
             }
         }
