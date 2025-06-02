@@ -133,12 +133,15 @@ namespace SIMSAPI.Controllers
                 Payload = payloadJson
             };
 
+            Console.WriteLine("SDK request to Lambda = " + request.Payload);
+
             InvokeResponse response = await lambdaClient.InvokeAsync(request);
 
             using var reader = new StreamReader(response.Payload);
             string responseBody = await reader.ReadToEndAsync();
 
-            Console.WriteLine("API response from Lambda = " + responseBody);
+            Console.WriteLine("SDK response from Lambda = " + responseBody);
+                        
             return responseBody;
         }
 
