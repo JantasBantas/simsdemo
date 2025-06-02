@@ -134,7 +134,7 @@ namespace SIMSAPI.Controllers
             };
 
             Console.WriteLine("SDK request to Lambda = " + request.Payload);
-            Console.WriteLIne("PLEASE WORK");
+            Console.WriteLine("PLEASE WORK");
 
             InvokeResponse response = await lambdaClient.InvokeAsync(request);
 
