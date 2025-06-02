@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Npgsql;
 using RestSharp;
-using System.Text.Json;
+using Amazon.Lambda;
+using Amazon.Lambda.Model;
+
 
 
 namespace SIMSAPI.Controllers
@@ -76,6 +79,7 @@ namespace SIMSAPI.Controllers
             }
         }
 
+/*
         [HttpPost]
         [Route("STOP")]
         public string Post(string resourceID)
@@ -103,6 +107,42 @@ namespace SIMSAPI.Controllers
                 System.Console.WriteLine("API response from Lambda = " + response.Content);
             return response.Content;
         }
+        */
+
+//NEUER VERSUCH ÜBER SDK:
+
+        [HttpPost]
+        [Route("STOP")]
+        public async Task<string> Post(string resourceID)
+        {
+            string functionName = Environment.GetEnvironmentVariable("Lambda_ARN")
+
+            var lambdaClient = new AmazonLambdaClient(); // verwendet standardmäßig Umgebungs- oder EC2-Rollen
+
+            var payloadObj = new
+            {
+                cluster = "SIMS_Cluster",
+                task = resourceID
+            };
+
+            string payloadJson = JsonSerializer.Serialize(payloadObj);
+
+            var request = new InvokeRequest
+            {
+                FunctionName = functionName,
+                Payload = payloadJson
+            };
+
+            InvokeResponse response = await lambdaClient.InvokeAsync(request);
+
+            using var reader = new StreamReader(response.Payload);
+            string responseBody = await reader.ReadToEndAsync();
+
+            Console.WriteLine("API response from Lambda = " + responseBody);
+            return responseBody;
+        }
+
+
 
         private string generateToken(string username, string password)
         {
