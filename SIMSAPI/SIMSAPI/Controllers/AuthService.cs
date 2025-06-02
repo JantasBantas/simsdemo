@@ -45,7 +45,7 @@ namespace SIMSAPI.Controllers
                 //KOMMENTAR
                 System.Console.WriteLine("START update lastlogin");
 
-                string connectionString = Environment.GetEnvironmentVariable("connectionstring");
+                string connectionString = System.Environment.GetEnvironmentVariable("connectionstring");
                 using (NpgsqlConnection db = new NpgsqlConnection(connectionString))
                 {
                     db.Open();
@@ -115,7 +115,7 @@ namespace SIMSAPI.Controllers
         [Route("STOP")]
         public async Task<string> Post(string resourceID)
         {
-            string functionName = Environment.GetEnvironmentVariable("Lambda_ARN");
+            string functionName = System.Environment.GetEnvironmentVariable("Lambda_ARN");
 
             var lambdaClient = new AmazonLambdaClient(); // verwendet standardmäßig Umgebungs- oder EC2-Rollen
 
@@ -161,7 +161,7 @@ namespace SIMSAPI.Controllers
 
                 //Diese Environment Variable ist vermutlich nicht erreichbar, weil sie SIMS_WEB erstellt. In Docker compose local geht es, aber in einzelnen Containern eher nicht.
                 //string connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION");
-                string connectionString = Environment.GetEnvironmentVariable("connectionstring");
+                string connectionString = System.Environment.GetEnvironmentVariable("connectionstring");
 
                 //KOMMENTAR:
                 Console.WriteLine("connectionstring-value= " + connectionString);
