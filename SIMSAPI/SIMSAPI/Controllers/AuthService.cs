@@ -115,7 +115,7 @@ namespace SIMSAPI.Controllers
         [Route("STOP")]
         public async Task<string> Post(string resourceID)
         {
-            string functionName = Environment.GetEnvironmentVariable("Lambda_ARN")
+            string functionName = Environment.GetEnvironmentVariable("Lambda_ARN");
 
             var lambdaClient = new AmazonLambdaClient(); // verwendet standardmäßig Umgebungs- oder EC2-Rollen
 
