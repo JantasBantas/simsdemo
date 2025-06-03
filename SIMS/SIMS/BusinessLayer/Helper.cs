@@ -60,8 +60,12 @@ namespace SIMS
                 string contentbody = JsonSerializer.Deserialize<string>(response.Content);
                 using JsonDocument doc = JsonDocument.Parse(contentbody);
                 JsonElement root = doc.RootElement;
-                string message = root.GetProperty("message").GetString();
-                //string stopMessage = JsonSerializer.Serialize(message);
+                string body = root.GetProperty("body").GetString();
+
+                using JsonDocument innerDoc = JsonDocument.Parse(body);
+                JsonElement innerRoot = innerDoc.RootElement;
+                string message = innerRoot.GetProperty("message").GetString();
+
                 Console.WriteLine("stopInstance: stopMessage = " + message);
 
                 return message;
