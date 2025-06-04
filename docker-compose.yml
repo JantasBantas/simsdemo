@@ -14,6 +14,7 @@ services:
             - POSTGRES_PASSWORD=1234
             - POSTGRES_USER=postgresadmin
             - POSTGRES_DB=db1
+            #Old secrets, dont try to use them ;)
         image: simsdb
     redisdb1:
         container_name: redisdb1
@@ -27,6 +28,7 @@ services:
         environment:
             - redisdb=redisdb1
             - postgresdb=Host=simsdb1;Username=postgresadmin;Password=1234;Database=db1
+            #Old secrets, dont try to use them ;)
         links:
             - redisdb1
         image: simsapi:latest
@@ -37,6 +39,7 @@ services:
         environment:
             - api=http://simsapi1:8080
             - postgresdb=Host=simsdb1;Username=postgresadmin;Password=1234;Database=db1
+            #Old secrets, dont try to use them ;)
         links:
             - simsdb1
             - simsapi1

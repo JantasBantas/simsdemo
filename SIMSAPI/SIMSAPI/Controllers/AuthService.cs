@@ -141,7 +141,7 @@ namespace SIMSAPI.Controllers
             using var reader = new StreamReader(response.Payload);
             string responseBody = await reader.ReadToEndAsync();
 
-            Console.WriteLine("SDK response from Lambda = " + responseBody);
+            Console.WriteLine("SDK 2025 response from Lambda = " + responseBody);
                         
             return responseBody;
         }
